@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chalkboard</title>
+        <style>
+            textarea {
+                border: none;
+                position: fixed;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                width: 100%;
+                height: 100%;
+                outline: 0;
+                font-size: 23px;
+                padding:1.5rem 2rem 2rem;
+                max-width: 900px;
+                margin: 0 auto;
+                color: #efefef;
+                background: #555;
+            }
+
+            h2 {
+                color: #ccc;
+                font-size: 12px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+            }
+        </style>
+        </head>
+        <body>
+            <h2>chalkboard</h2>
+            <textarea></textarea>
+
+        <script>
+            // todo fix global scope
+            loadContent = function(){
+                fetch('/api/board')
+                .then(function(response) {
+                    return response.text();
+                }).then(function(data) {
+                    area.value = data
+                }); 
+            };
+
+            var timer;
+            // todo fix global scope
+            areaListener = function(event){
+                clearTimeout(timer);
+                console.log("EVENT", event);
+                timer = window.setTimeout(syncBoard, 1000)
+            
+            };
+
+            // todo fix global scope
+            syncBoard = function(){
+                console.log("sync board", area.value)
+                fetch("/api/board", {
+                    method: "POST",
+                    body: area.value
+                })
+
+            }
+            
+
+
+            window.onload = function(){
+                // todo fix global scope
+                area = document.querySelector("textarea");
+
+                area.addEventListener("keyup", areaListener)
+                area.addEventListener("change", areaListener)
+                loadContent()
+                //attachListeners()
+
+            }
+        </script>
+        </body>
+</html>
