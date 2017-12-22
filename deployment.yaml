@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: chalkboard
+  name: chalkboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chalkboard
+  template:
+    metadata:
+      labels:
+        app: chalkboard
+    spec:
+      containers:
+      - name: chalkboard
+        image: mailtruck/chalkboard:latest
+        ports:
+        - name: chalkboard
+          containerPort: 8080
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chalkboard
+spec:
+  ports:
+  - name: chalkboard
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: chalkboard

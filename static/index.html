@@ -14,11 +14,14 @@
                 height: 100%;
                 outline: 0;
                 font-size: 23px;
-                padding:1.5rem 2rem 2rem;
+                padding: 1.5rem 2rem 2rem;
                 max-width: 900px;
                 margin: 0 auto;
                 color: #efefef;
                 background: #555;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+                font-weight: bold;
+                margin-top: 25px;
             }
 
             h2 {
@@ -33,7 +36,7 @@
             <textarea></textarea>
 
         <script>
-            // todo fix global scope
+            // TODO fix global scope
             loadContent = function(){
                 fetch('/api/board')
                 .then(function(response) {
@@ -44,15 +47,14 @@
             };
 
             var timer;
-            // todo fix global scope
+            // TODO fix global scope
             areaListener = function(event){
                 clearTimeout(timer);
-                console.log("EVENT", event);
                 timer = window.setTimeout(syncBoard, 1000)
             
             };
 
-            // todo fix global scope
+            // TODO fix global scope
             syncBoard = function(){
                 console.log("sync board", area.value)
                 fetch("/api/board", {
@@ -65,14 +67,12 @@
 
 
             window.onload = function(){
-                // todo fix global scope
+                // TODO fix global scope
                 area = document.querySelector("textarea");
 
                 area.addEventListener("keyup", areaListener)
                 area.addEventListener("change", areaListener)
                 loadContent()
-                //attachListeners()
-
             }
         </script>
         </body>

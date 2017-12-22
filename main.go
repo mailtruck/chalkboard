@@ -19,7 +19,7 @@ right now the data is ephemeral, just like a real chalkboard ;p
 }
 
 func main() {
-	fmt.Println("Hello world!")
+	fmt.Println("Hello chalkboard!")
 
 	http.HandleFunc("/api/board", apiHandler)
 
@@ -40,7 +40,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer r.Body.Close()
-
+		log.Println(string(body))
 		content = append(content, string(body))
 		w.WriteHeader(http.StatusOK)
 		return
